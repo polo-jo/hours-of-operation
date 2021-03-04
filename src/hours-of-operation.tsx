@@ -5,6 +5,7 @@ import * as React from "react";
 import { MuiPickersUtilsProvider, KeyboardTimePicker } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import format from "date-fns/format";
+import { Section } from "./components/section";
 
 enum OpenStatus {
   OPEN = "Open",
@@ -152,26 +153,13 @@ export function HoursOfOperation(): JSX.Element {
   }
 
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <section className="content-section">
-        <div className="section-header">
-          <h2>Hours of Operation</h2>
-          {isEditing ? (
-            <div>
-              <Button onClick={handleToggleEditing} className="cancel-button">
-                Cancel
-              </Button>
-              <Button variant="contained" onClick={handlePublish} className="save-button">
-                Save
-              </Button>
-            </div>
-          ) : (
-            <Button className="header-edit-button" onClick={handleToggleEditing}>
-              Edit
-            </Button>
-          )}
-        </div>
-
+    <Section
+      isEditing={isEditing}
+      headerText="Hours of Operation"
+      onEditingChange={handleToggleEditing}
+      onSave={handlePublish}
+    >
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <p className="subheader">
           Manage standard hours of operations when providers are available to provide care. Patients will be informed if
           they submit an exam outside these hours
@@ -179,8 +167,8 @@ export function HoursOfOperation(): JSX.Element {
         <table>
           <tbody>{renderDailyRangeRows()}</tbody>
         </table>
-      </section>
-    </MuiPickersUtilsProvider>
+      </MuiPickersUtilsProvider>
+    </Section>
   );
 }
 

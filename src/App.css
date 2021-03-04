@@ -31,9 +31,6 @@
 .subheader {
   margin-top: 0;
 }
-.open-switch {
-  /*  */
-}
 
 table {
   border: none;
@@ -49,6 +46,7 @@ td {
 .branding-row {
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 .branding-row-question {
   width: 10rem;
@@ -57,4 +55,13 @@ td {
 .date-picker {
   width: 8rem;
   margin-right: 2rem !important;
+}
+
+.text-field {
+  height: 2rem;
+}
+
+#welcome-text {
+  width: 100%;
+  margin-left: 1.75rem;
 }
