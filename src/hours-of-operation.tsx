@@ -1,10 +1,9 @@
-import { Button, FormControlLabel, Switch } from "@material-ui/core";
+import DateFnsUtils from "@date-io/date-fns";
+import { FormControlLabel, Switch } from "@material-ui/core";
+import { KeyboardTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import format from "date-fns/format";
 import produce from "immer";
 import * as React from "react";
-// import "date-fns";
-import { MuiPickersUtilsProvider, KeyboardTimePicker } from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
-import format from "date-fns/format";
 import { Section } from "./components/section";
 
 enum OpenStatus {
@@ -28,13 +27,27 @@ enum Day {
 
 type DailyOperationsHours = Map<Day, DayOperationHours>;
 
+const [DEFAULT_START_TIME, DEFAULT_END_TIME] = (function getInitialTimes(): [Date, Date] {
+  const startDate = new Date();
+  startDate.setHours(9);
+  startDate.setMinutes(0);
+  startDate.setSeconds(0);
+
+  const endDate = new Date();
+  endDate.setHours(17);
+  endDate.setMinutes(0);
+  endDate.setSeconds(0);
+
+  return [startDate, endDate];
+})();
+
 const INITIAL_STATE: DailyOperationsHours = new Map([
   [Day.SUNDAY, { status: OpenStatus.CLOSED, hours: null }],
-  [Day.MONDAY, { status: OpenStatus.CLOSED, hours: null }],
-  [Day.TUESDAY, { status: OpenStatus.CLOSED, hours: null }],
-  [Day.WEDNESDAY, { status: OpenStatus.CLOSED, hours: null }],
-  [Day.THURSDAY, { status: OpenStatus.CLOSED, hours: null }],
-  [Day.FRIDAY, { status: OpenStatus.CLOSED, hours: null }],
+  [Day.MONDAY, { status: OpenStatus.OPEN, hours: { startTime: DEFAULT_START_TIME, endTime: DEFAULT_END_TIME } }],
+  [Day.TUESDAY, { status: OpenStatus.OPEN, hours: { startTime: DEFAULT_START_TIME, endTime: DEFAULT_END_TIME } }],
+  [Day.WEDNESDAY, { status: OpenStatus.OPEN, hours: { startTime: DEFAULT_START_TIME, endTime: DEFAULT_END_TIME } }],
+  [Day.THURSDAY, { status: OpenStatus.OPEN, hours: { startTime: DEFAULT_START_TIME, endTime: DEFAULT_END_TIME } }],
+  [Day.FRIDAY, { status: OpenStatus.OPEN, hours: { startTime: DEFAULT_START_TIME, endTime: DEFAULT_END_TIME } }],
   [Day.SATURDAY, { status: OpenStatus.CLOSED, hours: null }],
 ]);
 
@@ -73,12 +86,14 @@ export function HoursOfOperation(): JSX.Element {
                     onChange={() => {
                       setDailyOperationsHoursDraft(
                         produce(dailyOperationsHoursDraft, (draft) => {
-                          const [startTime, endTime] = getInitialTimes();
                           draft.set(
                             day,
                             dayOperationHours.status === OpenStatus.OPEN
                               ? { status: OpenStatus.CLOSED, hours: null }
-                              : { status: OpenStatus.OPEN, hours: { startTime, endTime } }
+                              : {
+                                  status: OpenStatus.OPEN,
+                                  hours: { startTime: DEFAULT_START_TIME, endTime: DEFAULT_END_TIME },
+                                }
                           );
                         })
                       );
@@ -170,20 +185,6 @@ export function HoursOfOperation(): JSX.Element {
       </MuiPickersUtilsProvider>
     </Section>
   );
-}
-
-function getInitialTimes(): [Date, Date] {
-  const startDate = new Date();
-  startDate.setHours(9);
-  startDate.setMinutes(0);
-  startDate.setSeconds(0);
-
-  const endDate = new Date();
-  endDate.setHours(17);
-  endDate.setMinutes(0);
-  endDate.setSeconds(0);
-
-  return [startDate, endDate];
 }
 
 function formatDate(date: Date) {

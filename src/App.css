@@ -12,6 +12,10 @@
   justify-content: space-between;
   align-items: center;
 }
+button {
+  font-weight: 600 !important;
+  font-size: 9pt !important;
+}
 .header-edit-button {
   color: var(--primary-color) !important;
   font-weight: 550;
@@ -27,6 +31,7 @@
 }
 .cancel-button {
   color: var(--primary-color) !important;
+  margin-right: 1rem !important;
 }
 .subheader {
   margin-top: 0;
