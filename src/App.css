@@ -13,7 +13,7 @@
   align-items: center;
 }
 .header-edit-button {
-  color: var(--edit-button-color);
+  color: var(--primary-color) !important;
   font-weight: 550;
   background: none;
   border: none;
@@ -21,8 +21,18 @@
   padding: 0;
   cursor: pointer;
 }
+.save-button {
+  background-color: var(--primary-color) !important;
+  color: white !important;
+}
+.cancel-button {
+  color: var(--primary-color) !important;
+}
 .subheader {
   margin-top: 0;
+}
+.open-switch {
+  /*  */
 }
 
 table {
@@ -42,4 +52,9 @@ td {
 }
 .branding-row-question {
   width: 10rem;
+}
+
+.date-picker {
+  width: 8rem;
+  margin-right: 2rem !important;
 }

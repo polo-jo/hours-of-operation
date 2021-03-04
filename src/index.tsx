@@ -1,3 +1,4 @@
+import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import { enableMapSet } from "immer";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -5,11 +6,21 @@ import { App } from "./App";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#6161ff",
+    },
+  },
+});
+
 enableMapSet();
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

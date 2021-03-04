@@ -2,6 +2,7 @@
   --edit-button-color: rgb(122, 122, 256);
   /* todo - darker text compliment */
   --text-primary-color: rgb(144, 144, 144);
+  --primary-color: rgb(97, 98, 255);
 }
 
 * {
